@@ -39,4 +39,3 @@ vim.keymap.set('n', '<leader>tb', ':silent! tabprevious<CR>', { desc = 'Previous
 
 --custom keybinds
 vim.keymap.set('n', '<leader>h', ':Themify<CR>', { desc = 'Change Theme' })
-vim.keymap.set('n', '<leader>lg', ':')
