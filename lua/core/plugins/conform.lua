@@ -1,7 +1,14 @@
-return { -- Autoformat
+-- 🪄 Autoformatting Configuration — Conform.nvim
+-- ---------------------------------------------------------
+-- Handles automatic and manual code formatting for multiple languages.
+-- Integrates seamlessly with LSP, Prettier, and Stylua.
+-- ---------------------------------------------------------
+return {
   'stevearc/conform.nvim',
-  event = { 'BufWritePre' },
+  event = { 'BufWritePre' }, -- Format before saving
   cmd = { 'ConformInfo' },
+
+  -- 🧭 Keybindings
   keys = {
     {
       '<leader>f',
@@ -9,44 +16,54 @@ return { -- Autoformat
         require('conform').format { async = true, lsp_format = 'fallback' }
       end,
       mode = '',
-      desc = '[F]ormat buffer',
+      desc = '[F]ormat current buffer',
     },
   },
+
+  -- ⚙️ Plugin Options
   opts = {
     notify_on_error = false,
+
+    -- 🔁 Auto-format on save
     format_on_save = function(bufnr)
-      -- Disable "format_on_save lsp_fallback" for languages that don't
-      -- have a well standardized coding style. You can add additional
-      -- languages here or re-enable it for the disabled ones.
+      -- Disable "format_on_save lsp_fallback" for specific filetypes
       local disable_filetypes = { c = true, cpp = true }
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
       else
         return {
           timeout_ms = 500,
-          lsp_format = 'fallback',
+          lsp_format = 'fallback', -- Use LSP formatter if available
         }
       end
     end,
+
+    -- 🧩 Formatters by filetype
     formatters_by_ft = {
+      -- 🦋 Lua
       lua = { 'stylua' },
-      c = { 'prettier' },
-      cpp = { 'prettier' },
+
+      -- 💻 Web stack
       javascript = { 'prettier' },
       typescript = { 'prettier' },
       javascriptreact = { 'prettier' },
       typescriptreact = { 'prettier' },
-      json = { 'prettier' },
       html = { 'prettier' },
       css = { 'prettier' },
+      json = { 'prettier' },
       markdown = { 'prettier' },
       yaml = { 'prettier' },
       toml = { 'prettier' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
+
+      -- ⚙️ System languages (optional)
+      c = { 'prettier' },
+      cpp = { 'prettier' },
+
+      -- 🐍 Example for chaining formatters
+      -- python = { 'isort', 'black' },
       --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      -- Example for fallback order
+      -- javascript = { 'prettierd', 'prettier', stop_after_first = true },
     },
   },
 }

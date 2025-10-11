@@ -1,25 +1,27 @@
-return { -- Autocompletion
+-- 🌟 Blink.CMP — Modern Autocompletion Engine for Neovim
+-- -------------------------------------------------------
+-- This configuration integrates Blink.CMP with LuaSnip, friendly-snippets,
+-- and lazydev, offering a responsive, intelligent, and elegant completion experience.
+-- -------------------------------------------------------
+return {
   'saghen/blink.cmp',
   event = 'VimEnter',
   version = '1.*',
+
   dependencies = {
-    -- Snippet Engine
+    -- ✨ Snippet Engine: LuaSnip
     {
       'L3MON4D3/LuaSnip',
       version = '2.*',
       build = (function()
-        -- Build Step is needed for regex support in snippets.
-        -- This step is not supported in many windows environments.
-        -- Remove the below condition to re-enable on windows.
+        -- Build regex support (skipped for Windows)
         if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
           return
         end
         return 'make install_jsregexp'
       end)(),
       dependencies = {
-        -- `friendly-snippets` contains a variety of premade snippets.
-        --    See the README about individual language/framework/plugin snippets:
-        --    https://github.com/rafamadriz/friendly-snippets
+        -- 📚 Premade snippets collection
         {
           'rafamadriz/friendly-snippets',
           config = function()
@@ -29,57 +31,37 @@ return { -- Autocompletion
       },
       opts = {},
     },
+
+    -- ⚙️ Optional integration with LazyDev for LSP-like completions in Lua configs
     'folke/lazydev.nvim',
   },
 
-  --- @module 'blink.cmp'
-  --- @type blink.cmp.Config
+  ---@module 'blink.cmp'
+  ---@type blink.cmp.Config
   opts = {
+    -- 🧠 Keymaps — smooth and intuitive completion behavior
     keymap = {
-      -- 'default' (recommended) for mappings similar to built-in completions
-      --   <c-y> to accept ([y]es) the completion.
-      --    This will auto-import if your LSP supports it.
-      --    This will expand snippets if the LSP sent a snippet.
-      -- 'super-tab' for tab to accept
-      -- 'enter' for enter to accept
-      -- 'none' for no mappings
-      --
-      -- For an understanding of why the 'default' preset is recommended,
-      -- you will need to read `:help ins-completion`
-      --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
-      --
-      -- All presets have the following mappings:
-      -- <tab>/<s-tab>: move to right/left of your snippet expansion
-      -- <c-space>: Open menu or open docs if already open
-      -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-      -- <c-e>: Hide menu
-      -- <c-k>: Toggle signature help
-      --
-      -- See :h blink-cmp-config-keymap for defining your own keymap
-      -- preset = 'default',
-      preset = 'enter', -- keep enter behavior
-      ['<C-l>'] = { 'select_and_accept' }, -- use Tab to confirm
-      ['<C-y>'] = false, -- disable the old mapping
-      -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-      --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+      -- Recommended preset options: 'default', 'super-tab', 'enter', 'none'
+      preset = 'enter', -- Accept completion with <Enter>
+      ['<C-l>'] = { 'select_and_accept' }, -- Confirm completion
+      ['<C-y>'] = false, -- Disable old mapping
+      -- <C-space> opens docs, <C-e> hides menu, <C-k> toggles signature help, etc.
     },
 
+    -- 🎨 UI and appearance
     appearance = {
-      -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- Adjusts spacing to ensure icons are aligned
-      nerd_font_variant = 'mono',
+      nerd_font_variant = 'mono', -- Keeps icons nicely aligned (for Nerd Font Mono)
     },
 
+    -- 💡 Completion behavior and documentation popup
     completion = {
-      -- By default, you may press `<c-space>` to show the documentation.
-      -- Optionally, set `auto_show = true` to show the documentation after a delay.
       documentation = {
-        auto_show = true,
-        -- auto_show_delay_ms = 500,
+        auto_show = true, -- Automatically show docs
+        -- auto_show_delay_ms = 500, -- Uncomment to delay
       },
     },
 
+    -- 🔍 Completion sources (order of priority)
     sources = {
       default = { 'lsp', 'path', 'snippets', 'lazydev' },
       providers = {
@@ -87,18 +69,18 @@ return { -- Autocompletion
       },
     },
 
+    -- ✂️ Snippet engine preset
     snippets = { preset = 'luasnip' },
 
-    -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-    -- which automatically downloads a prebuilt binary when enabled.
-    --
-    -- By default, we use the Lua implementation instead, but you may enable
-    -- the rust implementation via `'prefer_rust_with_warning'`
-    --
-    -- See :h blink-cmp-config-fuzzy for more information
-    fuzzy = { implementation = 'lua' },
+    -- ⚡ Fuzzy matching engine
+    fuzzy = {
+      implementation = 'lua', -- Use fast Lua fuzzy matching
+      -- Alternative: 'prefer_rust_with_warning' for a native Rust backend
+    },
 
-    -- Shows a signature help window while you type arguments for a function
-    signature = { enabled = true },
+    -- 🖋️ Function signature popups while typing
+    signature = {
+      enabled = true,
+    },
   },
 }

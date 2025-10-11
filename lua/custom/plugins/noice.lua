@@ -6,23 +6,20 @@ return {
     'MunifTanjim/nui.nvim',
     'rcarriga/nvim-notify',
   },
-  require('noice').setup {
-    presets = {
-      -- you can enable a preset by setting it to true, or a table that will override the preset config
-      -- you can also add custom presets that you can enable/disable with enabled=true
-      bottom_search = false, -- use a classic bottom cmdline for search
-      command_palette = false, -- position the cmdline and popupmenu together
-      long_message_to_split = false, -- long messages will be sent to a split
-      inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    },
-    -- Enable Noice
-    messages = {
-      enabled = true, -- enable messages
-      view = 'notify', -- use minimal view for messages
-      -- options:
-      -- "mini" → minimal, single-line
-      -- "notify" → sends to notification manager
-      -- "split" → split window
-    },
-  },
+  -- Noice setup
+  config = function()
+    require('noice').setup {
+      presets = {
+        -- Enable/disable presets
+        bottom_search = false, -- use a classic bottom cmdline for search
+        command_palette = false, -- position the cmdline and popupmenu together
+        long_message_to_split = false, -- send long messages to a split
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+      },
+      messages = {
+        enabled = true, -- enable messages
+        view = 'notify', -- view options: "mini", "notify", "split"
+      },
+    }
+  end,
 }

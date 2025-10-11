@@ -1,47 +1,84 @@
---options.lua
+-- ============================================================================
+-- Neovim Options
+-- ============================================================================
+
+-- =========================
+-- Leader Keys
+-- =========================
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = false
-vim.o.number = true
-vim.o.relativenumber = true
-vim.o.mouse = 'a'
-vim.o.showmode = false
+
+-- =========================
+-- Line Numbers & Scrolling
+-- =========================
+vim.o.number = true -- Show absolute line numbers
+vim.o.relativenumber = true -- Relative line numbers
+vim.o.cursorline = true -- Highlight current line
+vim.opt.scrolloff = 10 -- Keep 10 lines visible above/below cursor
+vim.opt.sidescrolloff = 8 -- Minimal horizontal scroll margin
+vim.opt.scroll = 1
+
+-- =========================
+-- Editing & Indentation
+-- =========================
+vim.opt.tabstop = 2 -- Number of spaces that a <Tab> counts for
+vim.opt.shiftwidth = 2 -- Width for autoindents
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.o.breakindent = true -- Maintain indentation on line wrap
+vim.o.list = true -- Show invisible characters
+vim.opt.listchars = { tab = '> ', trail = '·', nbsp = '␣' }
+
+-- =========================
+-- Search
+-- =========================
+vim.o.ignorecase = true -- Case insensitive search
+vim.o.smartcase = true -- Case sensitive if uppercase letters used
+
+-- =========================
+-- Clipboard & Mouse
+-- =========================
+vim.o.mouse = 'a' -- Enable mouse
 vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+  vim.o.clipboard = 'unnamedplus' -- Use system clipboard
 end)
-vim.o.breakindent = true
-vim.o.undofile = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.signcolumn = 'yes'
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+
+-- =========================
+-- Splits & Tabs
+-- =========================
 vim.o.splitright = true
 vim.o.splitbelow = true
-vim.o.list = true
-vim.opt.listchars = { tab = '> ', trail = '·', nbsp = '␣' }
-vim.o.inccommand = 'split'
-vim.o.cursorline = true
-vim.opt.scroll = 1
-vim.o.confirm = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.softtabstop = 2
--- Keep cursor away from screen edges when scrolling
-vim.opt.scrolloff = 10 -- minimal number of screen lines to keep above/below cursor
-vim.opt.sidescrolloff = 8
-vim.opt.ttyfast = true -- assume fast terminal connection
-vim.opt.smoothscroll = true
-vim.opt.termguicolors = true
-vim.o.background = 'dark'
 
--- Neovim performance options for large files
-vim.opt.lazyredraw = false -- don’t redraw during macros
-vim.opt.swapfile = false -- don’t use swapfiles
-vim.opt.undofile = false -- don’t keep undo history
-vim.opt.writebackup = false -- don’t make backup file
-vim.opt.showmode = false -- less UI overhead
-vim.opt.showcmd = false -- don’t show command in statusline
-vim.g.loaded_netrwPlugin = 1
+-- =========================
+-- Undo & Backup
+-- =========================
+vim.o.undofile = true -- Persistent undo
+vim.opt.swapfile = false -- Disable swapfile
+vim.opt.writebackup = false -- Disable backup files
+
+-- =========================
+-- Performance
+-- =========================
+vim.o.updatetime = 250 -- Faster completion and CursorHold
+vim.o.timeoutlen = 300 -- Key sequence timeout
+vim.opt.lazyredraw = false -- Faster macros
+vim.opt.ttyfast = true -- Assume fast terminal connection
+vim.opt.smoothscroll = true -- Smooth scrolling
+
+-- =========================
+-- UI & Appearance
+-- =========================
+vim.o.showmode = false -- Don't show mode since statusline handles it
+vim.o.showcmd = false -- Don't show command in statusline
+vim.opt.termguicolors = true -- Enable true colors
+vim.o.background = 'dark' -- Set background theme
+vim.o.signcolumn = 'yes' -- Always show sign column
+vim.o.inccommand = 'split' -- Incremental command preview
+vim.o.confirm = true -- Confirm to save changes before closing
+
+-- =========================
+-- Disable Built-in Plugins
+-- =========================
 vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

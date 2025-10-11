@@ -5,10 +5,10 @@ return {
     local alpha = require 'alpha'
     local dashboard = require 'alpha.themes.dashboard'
 
-    -- Header (ASCII art)
-
+    -- =========================
+    -- Header (ASCII Art)
+    -- =========================
     dashboard.section.header.val = {
-
       '                 ▄▄▄',
       ' ▄█████▄    ▄███████████▄    ▄███████   ▄███████   ▄███████   ▄█   █▄    ▄█   █▄',
       '███   ███  ███   ███   ███  ███   ███  ███   ███  ███   ███  ███   ███  ███   ███',
@@ -21,7 +21,9 @@ return {
       '                                       ███   █▀',
     }
 
-    -- Menu buttons
+    -- =========================
+    -- Menu Buttons
+    -- =========================
     dashboard.section.buttons.val = {
       dashboard.button('n', '  New file', ':ene <BAR> startinsert<CR>'),
       dashboard.button('r', '󰄉  Recent', ':Telescope oldfiles<CR>'),
@@ -31,7 +33,9 @@ return {
       dashboard.button('q', '  Quit', ':qa<CR>'),
     }
 
+    -- =========================
     -- Footer
+    -- =========================
     dashboard.section.footer.val = {
       '██████████████████████ ',
       '██        ██        ██ ',
@@ -46,6 +50,9 @@ return {
       '███████████  █████████ ',
     }
 
+    -- =========================
+    -- Setup
+    -- =========================
     alpha.setup(dashboard.opts)
   end,
 }

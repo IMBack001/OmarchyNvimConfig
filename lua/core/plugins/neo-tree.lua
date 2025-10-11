@@ -1,20 +1,39 @@
--- Neo-tree is a Neovim plugin to browse the file system
+-- 🗂 Neo-tree — File Explorer for Neovim
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
-  -- enable = true,
   version = '*',
+  lazy = true,
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
   },
-  lazy = true,
+
   keys = {
-    { '<leader>e', ':Neotree reveal <CR>', desc = 'NeoTree Reveal/Close', silent = true },
+    {
+      '<leader>e',
+      '<cmd>Neotree toggle reveal<CR>',
+      desc = 'Toggle [E]xplorer (Neo-tree)',
+      silent = true,
+    },
   },
+
   opts = {
+    close_if_last_window = true, -- Automatically close if Neo-tree is the last window
+    popup_border_style = 'rounded', -- Rounded borders for popups
+    enable_git_status = true, -- Show git status icons
+    enable_diagnostics = true, -- Show diagnostics (LSP warnings/errors)
+
+    window = {
+      position = 'left',
+      width = 32,
+      mappings = {
+        ['<leader>e'] = 'close_window',
+      },
+    },
+
     filesystem = {
       window = {
         width = 30,
@@ -23,42 +42,31 @@ return {
         size = { width = 80, height = 20 },
         border = 'rounded',
       },
+      follow_current_file = { enabled = true }, -- Focus the current file when opened
+      group_empty_dirs = true,
+      use_libuv_file_watcher = true,
+    },
+
+    default_component_configs = {
+      icon = {
+        folder_closed = '',
+        folder_open = '',
+        folder_empty = '',
+        folder_empty_open = '',
+        default = '',
+      },
+      git_status = {
+        symbols = {
+          added = '✚',
+          modified = '',
+          deleted = '✖',
+        },
+      },
+    },
+
+    source_selector = {
+      winbar = false,
+      statusline = true,
     },
   },
-  config = function()
-    require('neo-tree').setup {
-      close_if_last_window = true, -- closes Neo-tree if it's the last window
-      popup_border_style = 'rounded',
-      enable_git_status = true,
-      enable_diagnostics = true,
-      window = {
-        position = 'left', -- left, right, top, bottom
-        width = 30,
-        mappings = {
-          ['<leader>e'] = 'close_window',
-        },
-        -- ['/'] = 'filter_as_you_type',
-      },
-      default_component_configs = {
-        icon = {
-          folder_empty = '',
-          folder_empty_open = '',
-          folder_closed = '',
-          folder_open = '',
-          default = '',
-        },
-        git_status = {
-          symbols = {
-            added = '✚',
-            modified = '',
-            deleted = '✖',
-          },
-        },
-      },
-      source_selector = {
-        winbar = false,
-        statusline = true,
-      },
-    }
-  end,
 }

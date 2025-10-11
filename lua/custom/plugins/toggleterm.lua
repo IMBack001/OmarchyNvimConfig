@@ -14,7 +14,7 @@ return {
       persist_size = true,
       direction = 'float', -- can be "vertical", "horizontal", "tab", or "float"
       float_opts = {
-        border = 'rounded', -- border style
+        border = 'single', -- border style
         winblend = 0,
       },
     }

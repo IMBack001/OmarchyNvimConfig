@@ -1,13 +1,19 @@
-return { -- Highlight, edit, and navigate code
+-- 🌲 Treesitter — Highlight, edit, and navigate code
+-- https://github.com/nvim-treesitter/nvim-treesitter
+
+return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
-  main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-  -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+  main = 'nvim-treesitter.configs', -- Module to configure
+
   opts = {
+    -- Languages to ensure are installed
     ensure_installed = {
       'bash',
       'c',
+      'cpp',
       'diff',
+      'css',
       'html',
       'lua',
       'luadoc',
@@ -16,37 +22,39 @@ return { -- Highlight, edit, and navigate code
       'query',
       'vim',
       'vimdoc',
-      'cpp',
       'rust',
-      'css',
       'python',
       'javascript',
-      'jsonc',
       'json',
+      'jsonc',
       'toml',
     },
-    -- Autoinstall languages that are not installed
+
+    -- Automatically install missing parsers when entering buffer
     auto_install = true,
+
+    -- Syntax highlighting
     highlight = {
       enable = true,
+      -- Disable for files larger than 1 MB
       disable = function(_, buf)
         local max_filesize = 1024 * 1024 * 1 -- 1 MB
         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-          return true
-        end
+        return ok and stats and stats.size > max_filesize
       end,
-      -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-      --  If you are experiencing weird indenting issues, add the language to
-      --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+      -- Use Vim regex highlighting in addition to Treesitter for specific languages
       additional_vim_regex_highlighting = { 'ruby' },
     },
-    indent = { enable = true, disable = { 'ruby' } },
+
+    -- Indentation based on Treesitter
+    indent = {
+      enable = true,
+      disable = { 'ruby' }, -- Ruby indentation handled better by Vim regex
+    },
   },
-  -- There are additional nvim-treesitter modules that you can use to interact
-  -- with nvim-treesitter. You should go explore a few and see what interests you:
-  --
-  --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-  --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-  --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+
+  -- Additional modules to explore:
+  -- - Incremental selection: `:help nvim-treesitter-incremental-selection-mod`
+  -- - Treesitter context: https://github.com/nvim-treesitter/nvim-treesitter-context
+  -- - Treesitter textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 }
